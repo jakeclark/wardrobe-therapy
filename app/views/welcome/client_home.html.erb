@@ -1,0 +1,28 @@
+<% if user_signed_in? %>
+
+    <%
+        @UserSignedInDetails = UserDetail.find_by_user_id(current_user.id);
+
+
+    %>
+
+    <%
+       if !@UserSignedInDetails.nil?
+    %>
+      <h1 align="center">Welcome <%= @UserSignedInDetails.first_name %> </h1>
+        <%
+          end
+        %>
+
+      <div style="text-align:center">
+      <%= link_to "Profile", {:action=>"show",  :controller => "user_details"} %> |
+
+      <!--<%= link_to "List of Stylists", list_stylists_follow_path(current_user.id)%> -->
+
+      <!--<%= link_to "Lookbooks", lookbooks_path %>-->
+
+        <%= link_to "Lookbooks", books_path %>
+
+        </div>
+
+<% end %>

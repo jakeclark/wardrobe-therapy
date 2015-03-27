@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wardrobe Therapy</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<% if user_signed_in? %>
+
+    <nav role="navigation" class="navbar navbar-default">
+
+      <div class="navbar-header">
+        <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-brand"> LOGO<!--<%=image_tag("logo.png", height: '35', width: '52')%>--> </a>
+      </div>
+
+      <div id="navbarCollapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li> <%= link_to '', welcome_show_path, class: "glyphicon glyphicon-home"%> </li>
+          <li> <%= link_to "Change Password", {:action=>"edit",  :controller => "users/registrations"} %></li>
+          <li>
+            <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+          </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li> Signed in as... <%= current_user.email %> </li>
+        </ul>
+      </div>
+    </nav>
+
+
+<% else %>
+
+    <!--<li>
+      <%= link_to('Login', new_user_session_path)  %>
+    </li>
+    -->
+<% end %>
+<%= yield %>
+
+</body>
+</html>

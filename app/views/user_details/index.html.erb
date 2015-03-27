@@ -1,0 +1,52 @@
+
+<br>
+<h1 class="text-center login-title">Edit Details</h1>
+<div class="container">
+  <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+    <div class="row user-row">
+      <table>
+        <thead>
+
+        </thead>
+
+        <tbody>
+        <% @user_details.each do |user_detail| %>
+            <tr>
+
+              <div class="row user-row">
+                <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
+                  <img class="img-circle"
+                       src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50"
+                       alt="User Pic">
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                  <strong> User ID: <%= user_detail.user_id %> </strong><br>
+                  <span class="text-muted"> <%= user_detail.first_name %> <%= user_detail.last_name %> </span>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 dropdown-user" data-for=".cyruxx">
+                  <%= link_to '', edit_user_detail_path(user_detail), class:"glyphicon glyphicon-edit"%> |
+                  <%= link_to '', user_detail, method: :delete, data: { confirm: 'Are you sure?' }, class:"glyphicon glyphicon-remove" %>
+                  <!--<%= link_to "Follow", follow_follow_path(user_detail)%>-->
+                  <!--<%= link_to "Unfollow", unfollow_follow_path(user_detail)%>-->
+                </div>
+
+              </div>
+
+
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+
+
+
+
+      <br>
+      <%= link_to "Back", :back %>
+
+    </div>
+
+  </div>
+</div>
+

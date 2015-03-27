@@ -1,0 +1,75 @@
+<% if user_signed_in? %>
+
+    <h1 align="center">Welcome Administrator</h1>
+
+    <div style="text-align:center">
+      <%= link_to "Create User", {:action=>"new",  :controller => "users/registrations"} %> |
+      <%= link_to "Edit Users", {:action=>"index",  :controller => "user_details"} %>
+</div>
+
+
+      <div align="center" class="panel-body"> <b>Link a Client to a Stylist... </b></div>
+
+      <div align="center" class="panel-body">
+
+        <%
+            @all_users = User.all
+        %>
+
+        <script>
+            function show_alert()
+            {
+                alert("Link Created!");
+            }
+        </script>
+
+      <%= form_for @follow do |f| -%>
+
+            <b>Client ID:</b>
+
+            <select <%= text_field_tag "client_id" %> >
+              <option value=""> </option>
+              <%  @all_users.each do |user_record|
+
+                if user_record.has_role? :client
+
+                  if UserDetail.where(:user_id => user_record.id).blank?
+                    # no user details record for this id
+                  else
+                    @user_detail = UserDetail.find_by_user_id(user_record.id)
+
+                  end
+
+              %>
+                      <option value="<%= user_record.id %>"><%= @user_detail.first_name  %> <%= @user_detail.last_name %> </option>
+                  <%end
+
+                    end %>
+            </select>
+
+            <b>Stylist ID:</b>
+
+            <select <%= text_field_tag "stylist_id" %> >
+              <option value=""> </option>
+              <%  @all_users.each do |user_record|
+
+                if user_record.has_role? :stylist
+
+              %>
+                      <option value="<%= user_record.id %>"><%= user_record.email %></option>
+                  <%end
+
+                    end %>
+            </select>
+
+
+            <%= f.submit :onclick => "return confirm('Creating Link!')"  %>
+        <% end -%>
+
+      </div>
+
+
+
+
+
+<% end %>

@@ -1,0 +1,252 @@
+<script>
+    $(document).ready(function(){
+
+        $('#CategoryForm').hide(); //Initially form wil be hidden.
+        $('#EventForm').hide();
+        $('#BookForm').hide();
+        $('#BookDiv').hide();
+        $('#EventDiv').hide();
+        $('#CategoryDiv').hide();
+
+        $('#CategoryButton').click(function() {
+            $('#CategoryForm').show();//Form shows on button click
+
+            $('#CategoryDiv').show();
+
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
+        });
+
+        $('#EventButton').click(function() {
+            $('#EventForm').show();//Form shows on button click
+
+            $('#EventDiv').show();
+
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
+        });
+
+        $('#BookButton').click(function() {
+            $('#BookForm').show();//Form shows on button click\
+            $('#BookDiv').show();
+
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
+        });
+
+    });
+
+
+    function report(value) {
+
+        document.getElementById('bookidfield').value=value;
+    }
+
+
+    function validateMyForm()
+    {
+
+        if ( document.getElementById('bookDropDown').value ==  "")  {
+
+            alert("You must select a Book");
+            document.getElementById('bookDropDown').focus();
+            return false;
+        }
+
+        return true;
+    }
+
+</script>
+
+<%= form_for(@lookbook, :html => { :multipart => true} ) do |f| %>
+  <% if @lookbook.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@lookbook.errors.count, "error") %> prohibited this lookbook from being saved:</h2>
+
+      <ul>
+      <% @lookbook.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field" >
+    <%= f.label :user_id %><br>
+    <%= $global_lookbookid %>
+  </div>
+
+    <div class="field">
+
+      <%= f.label :book_id %><br>
+
+      <select onchange="report(this.value)" name="bookDropDown" id="bookDropDown">
+
+        <option value="" ></option>
+
+        <%
+           @all_books = Book.all
+        %>
+
+        <%  @all_books.each do |book_record|
+
+          #if( !book_record.stylist_id.nil?)
+
+          if( book_record.stylist_id == current_user.id.to_s &&  book_record.client_id == $global_lookbookid.to_s)
+
+        %>
+                <option value="<%= book_record.id %>" ><%= book_record.name  %></option>
+            <%
+               # end
+               end
+               end %>
+
+
+      </select>
+
+      <button type="button" id="BookButton" class="glyphicon glyphicon-plus"></button>
+
+      <br>
+
+
+    </div>
+
+
+  <div class="field">
+    <%= f.label :season %><br>
+    <select <%= f.text_field :season %>>
+      <option value="Spring">Spring</option>
+      <option value="Summer">Summer</option>
+      <option value="Autumn">Autumn</option>
+      <option value="Winter">Winter</option>
+    </select>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br>
+
+    <select <%= f.text_field :category %>>
+
+      <%
+         @all_categories = Category.all
+      %>
+
+      <%  @all_categories.each do |cat_record| %>
+              <option value="<%= cat_record.name %>"><%= cat_record.name  %> </option>
+          <%end %>
+
+
+    </select>
+
+    <button type="button" id="CategoryButton" class="glyphicon glyphicon-plus"></button>
+
+
+    <!--<%= link_to 'New Category', new_category_path, :onclick=>"window.open(this.href,'create_company', 'height=600, width=600');return false"%>-->
+    <br>
+
+
+  </div>
+  <div class="field">
+    <%= f.label :event %><br>
+
+    <select <%= f.text_field :event %>>
+
+      <%
+         @all_events = Event.all
+      %>
+
+      <%  @all_events.each do |event_record|
+
+
+      %>
+          <option value="<%= event_record.name %>"><%= event_record.name  %> </option>
+      <%end %>
+
+
+    </select>
+
+    <button type="button" id="EventButton"  class="glyphicon glyphicon-plus"></button>
+
+    <!--<%= link_to 'New Event', new_event_path %>-->
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :look %><br>
+    <%= f.text_field :look %>
+    <%= f.text_field :look_2 %>
+    <%= f.text_field :look_3 %>
+    <%= f.text_field :look_4 %>
+  </div>
+  <div class="field">
+    <%= f.label :year %><br>
+    <%= f.text_field :year %>
+  </div>
+
+    <div class="field">
+      <%= f.label :Outfit %><br>
+      <%= f.file_field :photo %><br>
+    </div>
+
+    <div class="field">
+      <%= f.label :Additional_Photo %><br>
+      <%= f.file_field :photo_extra %><br>
+    </div>
+
+    <div class="field">
+      <%= f.label :Audio %><br>
+      <%= f.file_field :audio %><br>
+    </div>
+
+    <%= f.hidden_field :user_id, :value => $global_lookbookid %>
+
+    <%= f.hidden_field :active, :value => true %>
+    <%= f.hidden_field :book_id, :id => "bookidfield", :value => $global_bookid %>
+
+    <%= if current_user.has_role? :stylist
+        f.hidden_field :stylist_id, :value => current_user.id
+    end
+    %>
+
+  <div class="actions">
+    <%= f.submit  :onclick => "return validateMyForm();"  %>
+  </div>
+<% end %>
+
+<br/>
+
+<div id="CategoryDiv" name="CategoryDiv" style="border:1px solid red">
+
+<%= form_for @category,:html => {:id => "CategoryForm"} do |c| %>
+
+    <%= c.text_field :name  %>
+    <%= c.submit %>
+<% end -%>
+
+</div>
+
+<div id="EventDiv" name="EventDiv" style="border:1px solid blue">
+
+<%= form_for @event,:html => {:id => "EventForm"} do |e| %>
+
+    <%= e.text_field :name %>
+    <%= e.submit %>
+<% end -%>
+
+  </div>
+
+<div id="BookDiv" name="BookDiv" style="border:1px solid yellow">
+
+<%= form_for @book,:html => {:id => "BookForm"} do |b| %>
+
+    <%= b.hidden_field :stylist_id, :value => current_user.id %>
+    <%= b.hidden_field :client_id, :value => $global_lookbookid %>
+      <%= b.hidden_field :active, :value => false %>
+    <%= b.text_field :name %>
+    <%= b.submit %>
+<% end -%>
+
+</div>
+
+

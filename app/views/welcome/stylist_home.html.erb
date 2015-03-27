@@ -1,0 +1,10 @@
+<% if user_signed_in? %>
+
+      <h1 align="center">Welcome <%= current_user.email %> </h1>
+
+      <div style="text-align:center">
+      <%= link_to "List of Clients", list_clients_follow_path(current_user.id), align:"center"%>
+        </div>
+
+<% end %>
+

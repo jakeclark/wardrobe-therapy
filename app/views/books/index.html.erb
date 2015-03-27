@@ -1,0 +1,127 @@
+<div class="text-center login-title"> <%=image_tag("logo.png", height: '140', width: '160')%> </div>
+
+<div class="container">
+  <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+    <div class="row user-row">
+      <h1 align="center">LookBooks</h1>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book|
+
+      if (!$global_currentClientSearchID.nil?)
+
+          @c_user =   $global_currentClientSearchID;
+        else
+          @c_user =   current_user.id;
+      end
+
+        if (book.client_id == @c_user)
+    %>
+
+        <% if current_user.has_role? :client %>
+
+
+              <% if book.active == true %>
+
+
+          <tr>
+
+        <%
+           @lookbooks = book.lookbooks
+           @lookbooks = @lookbooks.first
+
+           if( !@lookbooks.nil? )
+           puts @lookbooks.id;
+        %>
+
+        <td>
+
+          <a href="<%= lookbooks_path(book_id: book.id) %>">
+          <img class="small" src="<%=@lookbooks.photo.url%>" width="200"/>
+          </a>
+
+          <% end%>
+
+        <!--<td><%= link_to 'Show', book %></td>-->
+       <!-- <td><%= link_to 'Edit', edit_book_path(book) %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+
+        <td><%= book.name %></td>
+
+
+      </tr> <%end%>
+        <%else%>
+
+
+              <tr>
+
+                <%
+                   @lookbooks = book.lookbooks
+                   @lookbooks = @lookbooks.first
+                   if( !@lookbooks.nil? )
+                     puts @lookbooks.id;
+                %>
+
+                <td>
+
+                  <a href="<%= lookbooks_path(book_id: book.id) %>">
+                    <img class="small" src="<%=@lookbooks.photo.url%>" width="200"/>
+                  </a>
+                <% end%>
+                <td><%= book.name %></td>
+
+
+                <td>
+
+                      <%
+                         if book.active == true
+                      %>
+
+                          <%= form_for book do |f| -%>
+
+                              <%= f.hidden_field :id, :value => book.id %>
+                              <%= f.hidden_field :active, :value => false %>
+                              <%= f.submit "Set to Inactive"%>
+                          <% end -%>
+
+                      <% else %>
+
+                          <%= form_for book do |f| -%>
+
+                              <%= f.hidden_field :id, :value => book.id %>
+                              <%= f.hidden_field :active, :value => true %>
+                              <%= f.submit "Set to Active"%>
+                          <% end -%>
+
+
+                      <%end%>
+
+                    <td><%= link_to 'Edit', edit_book_path(book) %> |</td>
+                    <td> <%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %> |</td>
+                    <td> <%= link_to 'Upload Another Page', new_lookbook_path(:type => @lookbooks.user_id)  %></td>
+
+                </td>
+              </tr>
+
+
+
+        <%end%>
+
+    <% end
+    end%>
+  </tbody>
+</table>
+
+<br>
+<!--<%= link_to 'New Book', new_book_path %>-->
+    </div>
+
+  </div>
+</div>

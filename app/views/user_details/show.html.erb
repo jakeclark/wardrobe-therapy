@@ -1,0 +1,130 @@
+<!--<p id="notice"><%= notice %></p>-->
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+
+      <br>
+      <p class=" text-info" id="demo"> <script> document.getElementById("demo").innerHTML = Date(); </script> </p>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">  <%= @user_detail.first_name %>  <%= @user_detail.last_name %> </h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3 col-lg-3 " align="center">
+              <% if @user_detail.profile_pic.exists? %>
+                  <img alt="User Pic" src="<%=@user_detail.profile_pic.url%>" class="img-circle" width="100" height="100">
+                 <%else%>
+                  <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle">
+            <%end%>
+
+
+                  </div>
+
+            <div class=" col-md-9 col-lg-9 ">
+              <table class="table table-user-information">
+                <tbody>
+                <tr>
+                  <td>User ID:</td>
+                  <td> <%= @user_detail.user_id %> </td>
+                </tr>
+                <tr>
+                  <td>Join Date:</td>
+                  <td><%= @user_detail.created_at %> </td>
+                </tr>
+                <tr>
+                  <td>Date of Birth</td>
+                  <td> <%= @user_detail.dob %>  </td>
+                </tr>
+                <tr>
+                  <td>Gender</td>
+                  <td> <%= @user_detail.gender %>  </td>
+                </tr>
+                <tr>
+                  <td>Employer</td>
+                  <td> <%= @user_detail.employer %>  </td>
+                </tr>
+                <tr>
+                  <td>Address Line 1</td>
+                  <td> <%= @user_detail.address_1 %>  </td>
+                </tr>
+                <tr>
+                  <td>Address Line 2</td>
+                  <td> <%= @user_detail.address_2 %>  </td>
+                </tr>
+                <tr>
+                  <td>City</td>
+                  <td> <%= @user_detail.city %>  </td>
+                </tr>
+                <tr>
+                  <td>State</td>
+                  <td> <%= @user_detail.state %>  </td>
+                </tr>
+                <tr>
+                  <td>Zip Code</td>
+                  <td> <%= @user_detail.zip_code %>  </td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>  <%= @user_detail.email %> </td>
+                </tr>
+                <tr>
+                <td>Phone Number</td>
+                <td> <%= @user_detail.day_time_phone %> (Day Time)<br><br> <%= @user_detail.mobile_phone %> (Mobile)
+                </td>
+                </tr>
+                <tr>
+                  <td>Favourite Designer:</td>
+                  <td> <%= @user_detail.favourite_designer %> </td>
+                </tr>
+                <tr>
+                  <td>Measurements:</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Height:</td>
+                  <td> <%= @user_detail.height %> </td>
+                  <td>Dress/Pant:</td>
+                  <td> <%= @user_detail.dress_pant_size %> </td>
+                </tr>
+                <tr>
+                  <td>Jacket:</td>
+                  <td> <%= @user_detail.jacket_size %> </td>
+                  <td>Shoe:</td>
+                  <td> <%= @user_detail.shoe_size %> </td>
+                </tr>
+                <tr>
+                  <td>Bust:</td>
+                  <td> <%= @user_detail.bust %> </td>
+                  <td>Waist:</td>
+                  <td> <%= @user_detail.waist %> </td>
+                </tr>
+
+                <tr>
+                  <td> Hips:</td>
+                  <td> <%= @user_detail.hips %> </td>
+                </tr>
+
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <%= link_to "", :back, class: "glyphicon glyphicon-home"%>
+          <span class="pull-right">
+            <%= link_to '', edit_user_detail_path(@user_detail), class: "glyphicon glyphicon-edit"%>
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

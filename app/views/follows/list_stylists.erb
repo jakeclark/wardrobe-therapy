@@ -1,0 +1,53 @@
+<!--Number of followers of a user (Client) by different stylists-->
+
+<br>
+<h1 class="text-center login-title">List of Stylists (<%=current_user.follow_count%>) </h1>
+<div class="container">
+  <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+    <div class="row user-row">
+      <table>
+        <thead>
+
+        <%  @user_list = current_user.all_following;
+
+
+        %>
+
+        <% @user_list.each do |stylists| %>
+            <tr>
+
+              <div class="row user-row">
+                <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
+                  <img class="img-circle"
+                       src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50"
+                       alt="User Pic">
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                  <strong> User ID: <%=  stylists.id %> </strong><br>
+                  <!--<span class="text-muted"> Email: <%=   %> </span>-->
+                </div>
+
+              </div>
+
+
+            </tr>
+        <% end %>
+
+        </thead>
+
+        <tbody>
+
+        </tbody>
+      </table>
+
+
+
+
+
+      <br>
+      <%= link_to '', welcome_show_path, class: "glyphicon glyphicon-home"%>
+
+    </div>
+
+  </div>
+</div>

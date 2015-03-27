@@ -1,0 +1,185 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-md-4 col-md-offset-4">
+      <h1 class="text-center login-title">Edit Details</h1>
+      <div class="account-wall">
+        <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
+             alt="">
+
+        <%= form_for(@user_detail) do |f| %>
+            <% if @user_detail.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@user_detail.errors.count, "error") %> prohibited this user_detail from being saved:</h2>
+
+                  <ul>
+                    <% @user_detail.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+            <% end %>
+
+            <table>
+              <thead>
+
+              </thead>
+
+              <tbody>
+
+              <tr>
+                <td><div class="field">
+                  <%= f.label :first_name%><br>
+                  <%= f.text_field :first_name %>
+                </div></td>
+                <td>  <div class="field">
+                  <%= f.label :last_name%><br>
+                  <%= f.text_field :last_name %>
+                </div>
+                </td>
+              </tr>
+              <tr>
+                <td><div class="field">
+                  <%= f.label :employer%><br>
+                  <%= f.text_field :employer %>
+                </div></td>
+                <td>  <div class="field">
+
+                </div>
+                </td>
+              </tr>
+              <tr>
+                <td><div class="field">
+                  <%= f.label :address_1%><br>
+                  <%= f.text_field :address_1 %>
+                </div></td>
+                <td> <div class="field">
+                  <%= f.label :address_2%><br>
+                  <%= f.text_field :address_2 %>
+                </div>
+                </td>
+              </tr>
+              <tr>
+                <td> <div class="field">
+                  <%= f.label :city%><br>
+                  <%= f.text_field :city %>
+                </div>
+                </td>
+                <td>  <div class="field">
+                  <%= f.label :state%><br>
+                  <%= f.text_field :state %>
+                </div>
+                </td>
+              </tr>
+              <tr>
+                <td> <div class="field">
+                  <%= f.label :zip_code%><br>
+                  <%= f.text_field :zip_code %>
+                </div>
+                </td>
+                <td>
+                  <div class="field">
+                    <%= f.label :day_time_phone%><br>
+                    <%= f.text_field :day_time_phone %>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td> <div class="field">
+                  <%= f.label :mobile_phone%><br>
+                  <%= f.text_field :mobile_phone %>
+                </div>
+                </td>
+                <td>
+                  <div class="field">
+                    <%= f.label :email%><br>
+                    <%= f.text_field :email %>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="field">
+                    <%= f.label :gender%><br>
+                    <%= f.text_field :gender %>
+                  </div>
+                </td>
+                <td> <div class="field">
+                  <%= f.label :dob%><br>
+                  <%= f.text_field :dob %>
+                </div></td>
+              </tr>
+              <tr>
+                <td>  <div class="field">
+                  <%= f.label :favourite_designer%><br>
+                  <%= f.text_field :favourite_designer %>
+                </div></td>
+                <td>  <div class="field">
+                  <%= f.label :height%><br>
+                  <%= f.text_field :height %>
+                </div></td>
+              </tr>
+              <tr>
+                <td>  <div class="field">
+                  <%= f.label :dress_pant_size%><br>
+                  <%= f.text_field :dress_pant_size %>
+                </div></td>
+                <td>  <div class="field">
+                  <%= f.label :jacket_size%><br>
+                  <%= f.text_field :jacket_size %>
+                </div></td>
+              </tr>
+              <tr>
+                <td>  <div class="field">
+                  <%= f.label :shoe_size%><br>
+                  <%= f.text_field :shoe_size %>
+                </div></td>
+                <td>  <div class="field">
+                  <%= f.label :bust%><br>
+                  <%= f.text_field :bust %>
+                </div></td>
+              </tr>
+              <tr>
+                <td>  <div class="field">
+                  <%= f.label :waist%><br>
+                  <%= f.text_field :waist %>
+                </div></td>
+                <td>  <div class="field">
+                  <%= f.label :hips%><br>
+                  <%= f.text_field :hips %>
+                </div></td>
+              </tr>
+
+              </tbody>
+
+            </table>
+
+            <div class="field">
+              <%= f.label :profile_pic %><br />
+              <%= f.file_field :profile_pic %>
+            </div>
+            <!--
+            <div class="field">
+              <%= f.label :user_id %><br>
+              <%= f.text_field :user_id %><br>
+           </div> -->
+
+            <br/>
+            <div class="actions">
+              <%= f.submit %>
+            </div>
+
+            <%= link_to 'Show', @user_detail %> |
+            <%= link_to "Back", :back %>
+
+        <% end %>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

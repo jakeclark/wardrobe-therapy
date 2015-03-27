@@ -1,0 +1,161 @@
+<!--<h1 class="text-center login-title">Lookbook</h1>-->
+
+<div class="text-center login-title"> <%=image_tag("logo.png", height: '140', width: '160')%> </div>
+
+<%
+   @userDetails = UserDetail.find_by_user_id(@lookbook.user_id);
+
+%>
+<h1 class="text-center login-title"> <%= @userDetails.first_name %>  <%= @userDetails.last_name %> </h1>
+<%
+
+%>
+
+
+<div class="container">
+  <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+    <div class="row user-row">
+
+<p id="notice"><%= notice %></p>
+
+<!--<p>
+  <strong>User:</strong>
+  <%= @lookbook.user_id %>
+</p>
+-->
+
+      <%
+         @lookbook.books.each do |p|
+           $book_name =  p.name
+         end %>
+
+<table align="center">
+  <tr>
+    <td><b>Date:</b></td>
+    <td><%= @lookbook.created_at %></td>
+    <td></td>
+  </tr>
+  <%if @lookbook.books.exists?%>
+  <tr>
+    <td><b>Part of book:</b></td>
+    <td><%=$book_name%>
+    </td>
+    <td></td>
+  </tr>
+      <%end%>
+  <tr>
+    <td><b>Category:</b></td>
+    <td><%= @lookbook.category %></td>
+    <td rowspan="9">
+
+      <!-- Lets make a simple image magnifier -->
+      <div class="magnify">
+
+        <!-- This is the magnifying glass which will contain the original/large version -->
+        <div class="large"></div>
+
+        <!-- This is the small image -->
+        <img class="small" src="<%=@lookbook.photo.url%>" width="200"/>
+
+      </div>
+
+    </td>
+  </tr>
+  <tr>
+    <td><b>Season:</b></td>
+    <td><%= @lookbook.season %></td>
+    <td rowspan="9">
+      <%
+          if @lookbook.photo_extra.exists?
+      %>
+          <!-- Lets make a simple image magnifier -->
+          <div class="magnify_two">
+
+            <!-- This is the magnifying glass which will contain the original/large version -->
+            <div class="large_two"></div>
+
+            <!-- This is the small image -->
+            <img class="small_two" src="<%=@lookbook.photo_extra.url%>" width="200"/>
+
+          </div>
+      <%
+          end
+      %>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Event:</b></td>
+    <td><%= @lookbook.event %></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><b>Description:</b></td>
+    <td><%= @lookbook.description %></td>
+    <td></td>
+  </tr>
+  <tr>
+  <td><b>Look:</b></td>
+  <td><%= @lookbook.look %></td>
+  <td></td>
+</tr>
+  <tr>
+    <td></td>
+    <td><%= @lookbook.look_2 %></td>
+    <td rowspan="9">
+      <%=
+        if @lookbook.audio.exists?
+          link_to('Listen to Audio Clip', @lookbook.audio.url)
+        end
+    %> </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><%= @lookbook.look_3 %></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><%= @lookbook.look_4 %></td>
+    <td></td>
+  </tr>
+
+</table>
+
+
+
+
+
+<%
+   if current_user.has_role? :client
+%>
+
+
+
+    <%= link_to 'Back', lookbooks_path %>
+   <!-- <%= link_to 'Edit', edit_lookbook_path(@lookbook) %> -->
+<%
+   end
+
+%>
+
+<%
+   if current_user.has_role? :stylist
+
+%>
+          <%= link_to 'Edit', edit_lookbook_path(@lookbook, :type => @lookbook.user_id ) %> |
+<!-- <%= link_to 'Back', lookbooks_path %> -->
+<%= link_to 'Upload Another Page', new_lookbook_path(:type => @lookbook.user_id)  %> |
+
+    <%= link_to 'Client List', list_clients_follow_path(current_user.id)  %>
+
+<%
+   end
+
+%>
+
+    </div>
+  </div>
+</div>
+</div>
+
+

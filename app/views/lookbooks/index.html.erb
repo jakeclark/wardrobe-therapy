@@ -1,0 +1,115 @@
+
+<script>
+
+    window.onload = function () {
+
+        //$("#inactive").hide();
+        //$('td:nth-child(1),th:nth-child(1)').hide();
+
+        //var checkbox = document.getElementById("show_inactives");
+
+        //checkbox.onclick = function () {
+
+        //}
+        /*
+        checkbox.onchange = function () {
+            if (this.checked) {
+                $("#inactive").show();
+                $('td:nth-child(1),th:nth-child(1)').show();
+
+            }
+            else {
+                $("#inactive").hide();
+                $('td:nth-child(1),th:nth-child(1)').hide();
+            }
+
+        };*/
+    };
+
+</script>
+<br>
+<!--<h1 class="text-center login-title">Lookbooks</h1>-->
+
+<div class="text-center login-title"> <%=image_tag("logo.png", height: '140', width: '160')%> </div>
+
+<!--<%= image_tag("logo.png") %>-->
+<div class="container">
+  <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+    <div class="row user-row">
+
+
+      <%
+         if current_user.has_role? :client
+
+      %>
+
+          <% @lookbooks.each do |lookbook| %>
+              <% if current_user.id == lookbook.user_id %>
+
+                  <div align="center" style = "border:1px solid black;">
+
+
+                    <a href="<%= lookbook_path(lookbook) %>">
+                    <img class="small" src="<%=lookbook.photo.url%>" width="200"/><br>
+                    </a>
+
+                    <%= lookbook.season %><br>
+                    <%= lookbook.category %><br>
+                    <%= lookbook.event %><br>
+                    <%= lookbook.description %><br>
+                    <%= lookbook.look %><br>
+                    <%= lookbook.created_at %><br>
+
+                  </div>
+                  <br>
+
+              <%end%>
+          <% end %>
+
+
+      <%
+
+         end
+
+
+         if current_user.has_role? :stylist
+
+      %>
+
+          <% @lookbooks.each do |lookbook| %>
+
+              <div align="center" style = "border:1px solid black;">
+
+                <a href="<%= lookbook_path(lookbook) %>">
+                  <img class="small" src="<%=lookbook.photo.url%>" width="200"/><br>
+                </a>
+
+                <%= lookbook.season %><br>
+                <%= lookbook.category %><br>
+                <%= lookbook.event %><br>
+                <%= lookbook.description %><br>
+                <%= lookbook.look %><br>
+                <%= lookbook.created_at %><br>
+                <%= link_to 'Edit', edit_lookbook_path(lookbook, :type => lookbook.user_id ) %><br>
+                <!--<%= link_to 'Destroy', lookbook, method: :delete, data: { confirm: 'Are you sure?' } %><br>-->
+
+              </div>
+
+          <% end %>
+
+      <%
+         end
+      %>
+
+      <br>
+      <!--<%= link_to "Back", :back %>-->
+      <%= link_to '', welcome_show_path, class: "glyphicon glyphicon-home"%>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+<!--<%= link_to 'New Lookbook', new_lookbook_path %>-->
