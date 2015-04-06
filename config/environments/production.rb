@@ -75,4 +75,19 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.paperclip_defaults = {
+      :storage => :s3,
+      :s3_credentials => {
+          :bucket => ENV['S3_BUCKET_NAME'],
+          #wardrobetherapy
+          :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+          #AKIAIEJ3BOESDEH6S26A
+          :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+          #+MxtLSzJe5ayBiAfghzA0EYVjn2CEvAukxt0yQxr
+      }
+  }
+
+  #Paperclip.options[:command_path] = 'C:/Program Files/ImageMagick-6.9.0-Q16'
+
 end
