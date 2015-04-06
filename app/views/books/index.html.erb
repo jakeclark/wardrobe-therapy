@@ -104,8 +104,13 @@
                       <%end%>
 
                     <td><%= link_to 'Edit', edit_book_path(book) %> |</td>
-                    <td> <%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %> |</td>
-                    <td> <%= link_to 'Upload Another Page', new_lookbook_path(:type => @lookbooks.user_id)  %></td>
+                    <td> <%= link_to 'Delete', book, method: :delete, data: { confirm: 'Are you sure?' } %> |</td>
+
+                    <% if( !@lookbooks.nil? ) %>
+                    <td> <%= link_to 'Upload Another Page', new_lookbook_path(:type => @lookbooks.user_id, :current_book_name => book.name )  %></td>
+                    <%else%>
+                    <td> <%= link_to 'Upload Another Page', new_lookbook_path(:type => book.client_id, :current_book_name => book.name )  %></td>
+                    <%end%>
 
                 </td>
               </tr>

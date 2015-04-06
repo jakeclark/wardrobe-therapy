@@ -14,6 +14,7 @@
             $('#CategoryDiv').show();
 
             $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+            document.getElementById('CatNameID').focus();
 
         });
 
@@ -23,7 +24,7 @@
             $('#EventDiv').show();
 
             $("html, body").animate({ scrollTop: $(document).height() }, "slow");
-
+            document.getElementById('EventNameID').focus();
         });
 
         $('#BookButton').click(function() {
@@ -31,7 +32,7 @@
             $('#BookDiv').show();
 
             $("html, body").animate({ scrollTop: $(document).height() }, "slow");
-
+            document.getElementById('BookNameID').focus();
         });
 
     });
@@ -56,6 +57,88 @@
         return true;
     }
 
+    function validateCategoryForm()
+    {
+        var catNameID = document.getElementById("CatNameID").value;
+
+        if( catNameID == "")
+        {
+            alert("Category cannot be empty!");
+            document.getElementById('CatNameID').focus();
+            return false
+        }
+
+        <%
+         @all_cate = Category.all
+         @all_cate.each do |cat| %>
+
+            if(catNameID == "<%= cat.name %>" )
+            {
+                alert("Category "+ "<%= cat.name %>" + " already exists!");
+                document.getElementById('CatNameID').value = "";
+                document.getElementById('CatNameID').focus();
+                return false;
+            }
+        <%end %>
+
+        return true;
+    }
+
+    function validateBookForm()
+    {
+        var bookNameID = document.getElementById("BookNameID").value;
+
+        if( bookNameID == "")
+        {
+            alert("Book cannot be empty!");
+            document.getElementById('BookNameID').focus();
+            return false
+        }
+
+        <%
+         @all_books = Book.all
+         @all_books.each do |book| %>
+
+        if(bookNameID == "<%= book.name %>" )
+        {
+            alert("Book "+ "<%= book.name %>" + " already exists!");
+            document.getElementById('BookNameID').value = "";
+            document.getElementById('BookNameID').focus();
+            return false;
+        }
+        <%end %>
+
+        return true;
+    }
+
+    function validateEventForm()
+    {
+        var eventNameID = document.getElementById("EventNameID").value;
+
+        if( eventNameID == "")
+        {
+            alert("Event cannot be empty!");
+            document.getElementById('EventNameID').focus();
+            return false
+        }
+
+        <%
+         @all_events = Event.all
+         @all_events.each do |eve| %>
+
+        if(eventNameID == "<%= eve.name %>" )
+        {
+            alert("Event "+ "<%= eve.name %>" + " already exists!");
+            document.getElementById('EventNameID').value = "";
+            document.getElementById('EventNameID').focus();
+            return false;
+        }
+        <%end %>
+
+        return true;
+    }
+
+
 </script>
 
 <%= form_for(@lookbook, :html => { :multipart => true} ) do |f| %>
@@ -75,6 +158,8 @@
     <%= f.label :user_id %><br>
     <%= $global_lookbookid %>
   </div>
+
+    <% if( $global_current_book.nil? )%>
 
     <div class="field">
 
@@ -110,28 +195,67 @@
 
 
     </div>
+    <%else
+        @current_b = Book.find_by_name( $global_current_book );
 
+        $global_bookid = @current_b.id;
+        puts $global_bookid;
+    %>
+        <div class="field" >
+          <%= f.label :Book_Name %><br>
+          <%= $global_current_book %>
+        </div>
+
+    <% end %>
 
   <div class="field">
     <%= f.label :season %><br>
-    <select <%= f.text_field :season %>>
-      <option value="Spring">Spring</option>
-      <option value="Summer">Summer</option>
-      <option value="Autumn">Autumn</option>
-      <option value="Winter">Winter</option>
+
+    <select <%= f.text_field :season %> >
+
+      <% if  @lookbook.season == "Spring" %>
+          <option value="Spring" selected>Spring</option>
+      <%else%>
+          <option value="Spring">Spring</option>
+      <%end%>
+
+      <% if  @lookbook.season == "Summer" %>
+          <option value="Summer" selected>Summer</option>
+      <%else%>
+          <option value="Summer">Summer</option>
+      <%end%>
+
+      <% if  @lookbook.season == "Autumn" %>
+          <option value="Autumn" selected>Autumn</option>
+      <%else%>
+          <option value="Autumn">Autumn</option>
+      <%end%>
+
+      <% if  @lookbook.season == "Winter" %>
+          <option value="Winter" selected>Winter</option>
+      <%else%>
+          <option value="Winter">Winter</option>
+      <%end%>
+
     </select>
   </div>
   <div class="field">
     <%= f.label :category %><br>
 
-    <select <%= f.text_field :category %>>
+    <select <%= f.text_field :category %> id="CatList" name="CatList">
 
       <%
          @all_categories = Category.all
       %>
 
       <%  @all_categories.each do |cat_record| %>
+
+          <% if ( @lookbook.category == cat_record.name ) %>
+              <option value="<%= cat_record.name %>" selected><%= cat_record.name  %> </option>
+          <%else%>
               <option value="<%= cat_record.name %>"><%= cat_record.name  %> </option>
+          <%end%>
+
           <%end %>
 
 
@@ -147,7 +271,6 @@
   </div>
   <div class="field">
     <%= f.label :event %><br>
-
     <select <%= f.text_field :event %>>
 
       <%
@@ -156,10 +279,15 @@
 
       <%  @all_events.each do |event_record|
 
-
+        if( @lookbook.event == event_record.name )
       %>
-          <option value="<%= event_record.name %>"><%= event_record.name  %> </option>
-      <%end %>
+          <option value="<%= event_record.name %>" selected><%= event_record.name  %> </option>
+
+          <%else%>
+              <option value="<%= event_record.name %>"><%= event_record.name  %> </option>
+          <%end%>
+
+    <%end %>
 
 
     </select>
@@ -220,8 +348,8 @@
 
 <%= form_for @category,:html => {:id => "CategoryForm"} do |c| %>
 
-    <%= c.text_field :name  %>
-    <%= c.submit %>
+    <%= c.text_field :name, :id => "CatNameID"%>
+      <%= c.submit  :onclick => "return validateCategoryForm();"  %>
 <% end -%>
 
 </div>
@@ -230,8 +358,8 @@
 
 <%= form_for @event,:html => {:id => "EventForm"} do |e| %>
 
-    <%= e.text_field :name %>
-    <%= e.submit %>
+    <%= e.text_field :name, :id => "EventNameID"%>
+      <%= e.submit  :onclick => "return validateEventForm();"  %>
 <% end -%>
 
   </div>
@@ -243,8 +371,8 @@
     <%= b.hidden_field :stylist_id, :value => current_user.id %>
     <%= b.hidden_field :client_id, :value => $global_lookbookid %>
       <%= b.hidden_field :active, :value => false %>
-    <%= b.text_field :name %>
-    <%= b.submit %>
+    <%= b.text_field :name, :id => "BookNameID"%>
+      <%= b.submit  :onclick => "return validateBookForm();"  %>
 <% end -%>
 
 </div>

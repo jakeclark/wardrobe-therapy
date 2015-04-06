@@ -142,9 +142,11 @@
    if current_user.has_role? :stylist
 
 %>
-          <%= link_to 'Edit', edit_lookbook_path(@lookbook, :type => @lookbook.user_id ) %> |
+          <%= link_to 'Edit', edit_lookbook_path(@lookbook, :type => @lookbook.user_id, :current_book_name => $book_name ) %>
+
+          |
 <!-- <%= link_to 'Back', lookbooks_path %> -->
-<%= link_to 'Upload Another Page', new_lookbook_path(:type => @lookbook.user_id)  %> |
+<%= link_to 'Upload Another Page', new_lookbook_path(:type => @lookbook.user_id, :current_book_name => $book_name)  %> |
 
     <%= link_to 'Client List', list_clients_follow_path(current_user.id)  %>
 
