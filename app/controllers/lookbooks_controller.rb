@@ -179,6 +179,8 @@ class LookbooksController < ApplicationController
     @event = Event.new
     @book = Book.new
     $global_lookbookid = params[:type]
+
+    $global_current_book = params[:current_book_name]
     @lookbook = Lookbook.new()
    # respond_with(@lookbook)
   end
@@ -188,6 +190,7 @@ class LookbooksController < ApplicationController
     @event = Event.new
     @book = Book.new
     $global_lookbookid = params[:type]
+    $global_current_book = params[:current_book_name]
   end
 
   def create
