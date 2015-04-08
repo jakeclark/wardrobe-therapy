@@ -38,8 +38,18 @@ class BooksController < ApplicationController
   end
 
   def destroy
+
+    @lookbooks = @book.lookbooks
+
+    @lookbooks.each do |l|
+      l.delete
+    end
+
+    @book.lookbooks.clear
+
     @book.destroy
     respond_with(@book)
+
   end
 
   private
