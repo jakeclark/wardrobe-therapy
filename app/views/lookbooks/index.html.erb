@@ -43,6 +43,7 @@
 
       %>
 
+          <% if( !@lookbooks.nil? ) %>
           <% @lookbooks.each do |lookbook| %>
               <% if current_user.id == lookbook.user_id %>
 
@@ -64,6 +65,7 @@
                   <br>
 
               <%end%>
+              <%end%>
           <% end %>
 
 
@@ -76,6 +78,7 @@
 
       %>
 
+          <% if( !@lookbooks.nil? ) %>
           <% @lookbooks.each do |lookbook| %>
 
               <div align="center" style = "border:1px solid black;">
@@ -96,7 +99,7 @@
               </div>
 
           <% end %>
-
+          <% end %>
       <%
          end
       %>

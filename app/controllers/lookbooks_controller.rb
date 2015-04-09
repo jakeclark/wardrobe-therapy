@@ -17,6 +17,9 @@ class LookbooksController < ApplicationController
       @lookbooks = @book.lookbooks
     end
 
+    if( !@lookbooks.nil? )
+
+
     if !params[:year].nil? && !params[:event].nil? && !params[:season].nil? && !params[:category].nil? && !params[:stylist_id].nil?
 
       #All present
@@ -154,7 +157,7 @@ class LookbooksController < ApplicationController
     else
       @lookbooks = @lookbooks.where(active: "t")
     end
-
+  end
 
     if( !params[:show_inactive].nil? )
     if( !params[:show_inactive].empty? )
@@ -217,7 +220,14 @@ class LookbooksController < ApplicationController
   end
 
   def destroy
-    @lookbook.destroy
+
+    @book = @lookbook.books;
+    @fbook = Book.find(@book);
+
+    @fbook.lookbooks.delete(@lookbook);
+
+    @lookbook.delete
+
     respond_with(@lookbook)
   end
 
