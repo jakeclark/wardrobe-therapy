@@ -49,7 +49,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def configure_account_update_params
   #   devise_parameter_sanitizer.for(:account_update) << :attribute
   # end
-
+   def sign_up(resource_name, resource)
+   #sign_in(resource_name, resource)
+   end
   # The path used after sign up.
   # def after_sign_up_path_for(resource)
   #   super(resource)
