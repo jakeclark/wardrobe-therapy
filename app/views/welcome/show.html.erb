@@ -38,10 +38,14 @@
                   else
                     @user_detail = UserDetail.find_by_user_id(user_record.id)
 
+                    if !@user_detail.first_name.nil? && !@user_detail.last_name.nil? %>
+                              <option value="<%= user_record.id %>"><%= @user_detail.first_name  %> <%= @user_detail.last_name %> </option>
+                          <%end
+
                   end
 
               %>
-                      <option value="<%= user_record.id %>"><%= @user_detail.first_name  %> <%= @user_detail.last_name %> </option>
+
                   <%end
 
                     end %>
